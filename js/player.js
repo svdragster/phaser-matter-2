@@ -12,6 +12,9 @@ export default class Player {
           a: A,
           d: D
         });
+
+        // Create the physics-based sprite that we will move around and animate
+        this.sprite = scene.matter.add.sprite(x, y, "player", null);
     }
 
     update() {

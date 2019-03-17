@@ -9,9 +9,9 @@ const config = {
   backgroundColor: "#1d212d",
   scene: PlatformerScene,
   physics: {
-    default: "arcade",
-    arcade: {
-      gravity: { y: 1000 }
+    default: "matter",
+    matter: {
+      debug: true
     }
   }
 };
