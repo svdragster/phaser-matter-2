@@ -8,6 +8,7 @@ const config = {
   pixelArt: true,
   backgroundColor: "#1d212d",
   scene: PlatformerScene,
+  pixelArt: true,
   physics: {
     default: "matter",
     matter: {

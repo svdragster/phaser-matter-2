@@ -26,9 +26,24 @@ export default class PlatformerScene extends Phaser.Scene {
         // the player (since the Player class is not a Phaser.Sprite).
         //this.groundLayer.setCollisionByProperty({ collides: true });
         //this.physics.world.addCollider(this.player.sprite, this.groundLayer);
+        var groundConfig = {
+            classType: Phaser.GameObjects.Sprite,
+            defaultKey: null,
+            defaultFrame: null,
+            active: true,
+            maxSize: -1,
+            runChildUpdate: true,    // run gameObject.update() if true
+            createCallback: null,
+            removeCallback: null,
+            createMultipleCallback: null
+        };
+        var groundGroup = this.add.group(groundConfig);
+        var platform = this.matter.add.sprite(400, 550, 'platform', null, { isStatic: true })
+        var platform = this.matter.add.sprite(450, 450, 'platform', null, { isStatic: true })
+        groundGroup.add(platform);
 
         this.cameras.main.startFollow(this.player.sprite);
-        //this.cameras.main.setBounds(0, 0, map.widthInPixels, map.heightInPixels);
+        this.cameras.main.setBounds(0, 0, 2000, 600);
 
         // Help text that has a "fixed" position on the screen
         this.add.text(16, 16, "Arrow keys or WASD to move & jump", {
@@ -38,14 +53,21 @@ export default class PlatformerScene extends Phaser.Scene {
             backgroundColor: "#ffffff"
         })
         .setScrollFactor(0);
+
+
+        const cursors = this.input.keyboard.createCursorKeys();
+        const controlConfig = {
+            camera: this.cameras.main,
+            left: cursors.left,
+            right: cursors.right,
+            up: cursors.up,
+            down: cursors.down,
+            speed: 0.5
+        };
+        this.controls = new Phaser.Cameras.Controls.FixedKeyControl(controlConfig);
     }
 
     update(time, delta) {
-        // Allow the player to respond to key presses and move itself
-        this.player.update();
-
-        /*if (this.player.sprite.y > this.groundLayer.height) {
-            this.player.destroy(); this.scene.restart();
-        }*/
+        this.controls.update(delta);
     }
 }
